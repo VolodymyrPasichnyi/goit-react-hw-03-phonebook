@@ -4,6 +4,9 @@ import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactsList/ContactList";
 import { Filter } from "./Filter/Filter";
 
+const LOCAL_KEY = ('key')
+
+
 
 export class App extends Component {
   state = {
@@ -16,6 +19,18 @@ export class App extends Component {
     filter: '',
   }
 
+  componentDidMount() {
+    const localData = localStorage.getItem(LOCAL_KEY)
+    if  (localData) {
+          this.setState({ contacts: JSON.parse(localData) })
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(this.state.contacts))
+    }
+  }
 
   createUser = (user) => {
     const newUser = {
@@ -46,7 +61,6 @@ export class App extends Component {
   deleteUser = (id) => {
     this.setState(prev => ({ contacts: [...prev.contacts.filter(contact => contact.id !== id)] }))
   }
-
 
     render() {
       return (
