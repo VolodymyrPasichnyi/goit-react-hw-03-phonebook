@@ -7,7 +7,6 @@ import { Filter } from "./Filter/Filter";
 const LOCAL_KEY = ('key')
 
 
-
 export class App extends Component {
   state = {
     contacts: [  
